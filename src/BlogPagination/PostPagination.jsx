@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import PostJson from './PostJson';
+import PaginateIt  from './PaginateIt';
 
 const PostPagination = () => {
     
@@ -24,11 +25,27 @@ const PostPagination = () => {
        fetchPosts();
     },[]);
 
+const postsPerPage = 10
+const totalPosts = 50
+
+
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div className="container mt-5">
             hello world Pagination
             <PostJson isloading={isloading} posts={posts}/>
+            <PaginateIt 
+        postsPerPage={postsPerPage}
+        totalPosts={posts.length}
+        paginate={paginate}
+            />
         </div>
     )
 }
